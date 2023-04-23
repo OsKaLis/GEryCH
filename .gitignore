@@ -1,0 +1,9 @@
+*.txt
+
+start_cmd.bat
+
+*.pdf
+
+__pycache__/
+
+.idea/
