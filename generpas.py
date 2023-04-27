@@ -3,23 +3,48 @@ import time
 
 
 # Клас генерации
-class generPas():
-    def __init__(self, kolPass, razSinvol, kolSekciy, dlinaSekcii):
-        self.kolPass = kolPass
+class GenerPas():
+    def __init__(self, kolPass: int, razSinvol, kolSekciy, dlinaSekcii):
+        self.kolPass: int = kolPass
         self.razSinvol = razSinvol
         self.kolSekciy = kolSekciy
         self.dlinaSekcii = dlinaSekcii
         self.passwords = []
-        self.BazaSimvol = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                           'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-                           'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z',
-                           'x', 'c', 'v', 'b', 'n', 'm', 'Q', 'W', 'E', 'R',
-                           'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F',
-                           'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B',
-                           'N', 'M']
         self.last_file_name = 'default_name_file'
 
-    # Создаю заданое количество паролей
+        # Символи для генерации
+        self.number_symbols = [
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        ]
+        self.lowercase_letters = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p',  'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        ]
+        self.uppercase_letters = [
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        ]
+        self.symbols = [
+            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=',
+            '+', '[', ']', '{', '}', ':', ':', '|', '<', '>', '?'
+        ]
+
+        self.list_of_character_types = {
+            'number_symbols': [True, self.number_symbols],
+            'lowercase_letters': [True, self.lowercase_letters],
+            'uppercase_letters': [True, self.uppercase_letters],
+            'symbols': [False, self.symbols]
+        }
+
+    # Создаю масим символов для генерации
+    def CreatebBaseSymbols(self):
+        rez = []
+        for name in self.list_of_character_types:
+            if self.list_of_character_types[name][0]:
+                rez += self.list_of_character_types[name][1]
+        return rez
+
+    # Создание заданое количество паролей
     def createPass(self):
         skleu = ""
         genPass = ""
@@ -27,7 +52,7 @@ class generPas():
             for j in range(0, self.kolSekciy):
                 for q in range(0, self.dlinaSekcii):
                     if q < self.dlinaSekcii:
-                        genPass += choice(self.BazaSimvol)
+                        genPass += choice(self.CreatebBaseSymbols())
                 if j + 1 < self.kolSekciy:
                     skleu += genPass + self.razSinvol
                 else:

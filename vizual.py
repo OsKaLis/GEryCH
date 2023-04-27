@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.ttk import Combobox, Notebook, Checkbutton, Style
 
-from generpas import generPas
+from generpas import GenerPas
 
 import pyperclip
 
@@ -11,7 +11,7 @@ class VizualPas():
         # Создаю окно
         window = tk.Tk()
         window.title('GEryCH')
-        window.geometry('600x540')
+        window.geometry('610x580')
         window.iconbitmap('images/1682135435611.ico')
 
         # Генерация простого пароля (######## ->)
@@ -37,7 +37,6 @@ class VizualPas():
             text='Количество синволов в пароле:',
             font='Calibri 18'
         )
-
         combobox_op = Combobox(
             lb_frame_op,
             font='Calibri 18',
@@ -47,25 +46,19 @@ class VizualPas():
         combobox_op.set(8)
         self.combobox_op = combobox_op
 
-        generate_one_pass = tk.Button(
-            lb_frame_op,
-            fg='#000000',
-            text='   Новый Пароль   ',
-            font='Calibri 15',
-            command=self.fun_one_pass
-            )
-
         # чекбоксы выбора из чего генерации
         style = Style()
         style.configure('TCheckbutton', font='Calibri 15')
 
         check_09_op = tk.BooleanVar()
-        checkbutton_09_op = Checkbutton(
+        self.checkbutton_09_op = checkbutton_09_op = Checkbutton(
             lb_frame_op,
             text="0 .. 9",
             variable=check_09_op,
             style="TCheckbutton"
         )
+        check_09_op.set(True)
+        self.check_09_op = check_09_op
 
         check_aw_op = tk.BooleanVar()
         checkbutton_aw_op = Checkbutton(
@@ -74,6 +67,8 @@ class VizualPas():
             variable=check_aw_op,
             style="TCheckbutton"
         )
+        check_aw_op.set(True)
+        self.check_aw_op = check_aw_op
 
         check_AW_op = tk.BooleanVar()
         checkbutton_AW_op = Checkbutton(
@@ -82,6 +77,8 @@ class VizualPas():
             variable=check_AW_op,
             style="TCheckbutton"
         )
+        check_AW_op.set(True)
+        self.check_AW_op = check_AW_op
 
         check_symbol_op = tk.BooleanVar()
         checkbutton_symbol_op = Checkbutton(
@@ -89,6 +86,15 @@ class VizualPas():
             text="№! .. /%",
             variable=check_symbol_op,
             style="TCheckbutton"
+        )
+        self.check_symbol_op = check_symbol_op
+
+        generate_one_pass = tk.Button(
+            lb_frame_op,
+            fg='#000000',
+            text='   Новый Пароль   ',
+            font='Calibri 15',
+            command=self.fun_one_pass
         )
 
         # Расположение элементов
@@ -252,39 +258,46 @@ class VizualPas():
         style = Style()
         style.configure('TCheckbutton', font='Calibri 15')
 
-        check_09 = tk.BooleanVar()
+        check_09_op_v_pf = tk.BooleanVar()
         checkbutton_09_op_v_pf = Checkbutton(
             frame_op_v_file,
             text="0 .. 9",
-            variable=check_09,
+            variable=check_09_op_v_pf,
             style="TCheckbutton"
             )
+        check_09_op_v_pf.set(True)
+        self.check_09_op_v_pf = check_09_op_v_pf
 
 
-        check_aw = tk.BooleanVar()
+        check_aw_op_v_pf = tk.BooleanVar()
         checkbutton_aw_op_v_pf = Checkbutton(
             frame_op_v_file,
             text="a .. w",
-            variable=check_aw,
+            variable=check_aw_op_v_pf,
             style="TCheckbutton"
         )
+        check_aw_op_v_pf.set(True)
+        self.check_aw_op_v_pf = check_aw_op_v_pf
 
-        check_AW = tk.BooleanVar()
+        check_AW_op_v_pf = tk.BooleanVar()
         checkbutton_AW_op_v_pf = Checkbutton(
             frame_op_v_file,
             text="A .. W",
-            variable=check_AW,
+            variable=check_AW_op_v_pf,
             style="TCheckbutton"
         )
+        check_AW_op_v_pf.set(True)
+        self.check_AW_op_v_pf = check_AW_op_v_pf
 
-        check_symbol = tk.BooleanVar()
+        check_symbol_op_v_pf = tk.BooleanVar()
         checkbutton_symbol_op_v_pf = Checkbutton(
             frame_op_v_file,
             text="№! .. /%",
-            variable=check_symbol,
+            variable=check_symbol_op_v_pf,
             style="TCheckbutton"
         )
-
+        check_symbol_op_v_pf.set(False)
+        self.check_symbol_op_v_pf = check_symbol_op_v_pf
 
         # кнопка сохранения в фаил простого пароля
         generate_file_pass_op_v_pf = tk.Button(
@@ -292,13 +305,13 @@ class VizualPas():
             fg='#000000',
             text='Сохранить в фаил',
             font='Calibri 15',
-            command=self.fun_file_pass
+            command=self.fun_file_pass_op
         )
 
 
         # Создание списка файлов в виде лицензии
-        for c in range(3): frame_pv_v_file.columnconfigure(index=c, weight=1)
-        for r in range(3): frame_pv_v_file.rowconfigure(index=r, weight=1)
+        for c in range(4): frame_pv_v_file.columnconfigure(index=c, weight=1)
+        for r in range(4): frame_pv_v_file.rowconfigure(index=r, weight=1)
 
         self.lb_pass_pv_pf = lb_pass_pv_pf = tk.Label(
             frame_pv_v_file,
@@ -306,6 +319,21 @@ class VizualPas():
             font='Calibri 18',
             fg='#1E90FF'
             )
+
+        # киличество паролей в файле
+        lb_len_pass_pv_v_pf = tk.Label(
+            frame_pv_v_file,
+            text='Количество паролей в файле:',
+            font='Calibri 18'
+        )
+        combobox_len_pass_pv_v_pf = Combobox(
+            frame_pv_v_file,
+            font='Calibri 18',
+            values=[str(x) for x in range(10, 1001)],
+            width=5
+        )
+        combobox_len_pass_pv_v_pf.set(10)
+        self.combobox_len_pass_pv_v_pf = combobox_len_pass_pv_v_pf
 
         lb_separating_symbol_pv_v_file = tk.Label(
             frame_pv_v_file,
@@ -355,8 +383,9 @@ class VizualPas():
             fg='#000000',
             text='Сохранить в фаил',
             font='Calibri 15',
-            command=self.fun_file_pass
+            command = self.fun_file_pass_pv_v_file
             )
+        self.generate_file_pass_pv_pf = generate_file_pass_pv_pf
 
         # Расположение элементов
         lb_frame_p_file.pack(fill=tk.X)
@@ -375,22 +404,62 @@ class VizualPas():
 
         # пароли вида лицензии
         lb_pass_pv_pf.grid(row=0, column=0, columnspan=4)
-        lb_separating_symbol_pv_v_file.grid(row=1, column=0, columnspan=2, sticky='w')
-        combobox_separating_symbol_pv_v_file.grid(row=1, column=2, sticky='e')
-        lb_number_of_sections_pv_v_file.grid(row=2, column=0, columnspan=2, sticky='w')
-        combobox_number_of_sections_pv_v_file.grid(row=2, column=2, sticky='e')
-        lb_size_of_sections_pv_v_file.grid(row=3, column=0, columnspan=2, sticky='w')
-        combobox_size_of_sections_pv_v_file.grid(row=3, column=2, sticky='e')
-        generate_file_pass_pv_pf.grid(row=1, column=3, rowspan=3)
+        lb_len_pass_pv_v_pf.grid(row=1, column=0, sticky='w', columnspan=2)
+        combobox_len_pass_pv_v_pf.grid(row=1, column=2, sticky='e')
+        lb_separating_symbol_pv_v_file.grid(row=2, column=0, columnspan=2, sticky='w')
+        combobox_separating_symbol_pv_v_file.grid(row=2, column=2, sticky='e')
+        lb_number_of_sections_pv_v_file.grid(row=3, column=0, columnspan=2, sticky='w')
+        combobox_number_of_sections_pv_v_file.grid(row=3, column=2, sticky='e')
+        lb_size_of_sections_pv_v_file.grid(row=4, column=0, columnspan=2, sticky='w')
+        combobox_size_of_sections_pv_v_file.grid(row=4, column=2, sticky='e')
+        generate_file_pass_pv_pf.grid(row=1, column=3, rowspan=4)
 
 
         # Запуск окна
         window.mainloop()
 
+    # Формирую символь для генерации
+    def formation_ofa_symbolic_list(
+            self,
+            password_object,
+            number_symbols=True,
+            lowercase_letters=True,
+            uppercase_letters=True,
+            symbols=False
+    ):
+        if number_symbols == True:
+            password_object.list_of_character_types['number_symbols'][0] = True
+        else:
+            password_object.list_of_character_types['number_symbols'][0] = False
+
+        if lowercase_letters == True:
+            password_object.list_of_character_types['lowercase_letters'][0] = True
+        else:
+            password_object.list_of_character_types['lowercase_letters'][0] = False
+
+        if uppercase_letters == True:
+            password_object.list_of_character_types['uppercase_letters'][0] = True
+        else:
+            password_object.list_of_character_types['uppercase_letters'][0] = False
+
+        if symbols == True:
+            password_object.list_of_character_types['symbols'][0] = True
+        else:
+            password_object.list_of_character_types['symbols'][0] = False
+
+        return password_object
+
     # функция вывода нового простого пароля
     def fun_one_pass(self):
         # Формирования с паролем
-        pas = generPas(1, '-', 1, int(self.combobox_op.get()))
+        pas = GenerPas(1, '-', 1, int(self.combobox_op.get()))
+        pas = self.formation_ofa_symbolic_list(
+            pas,
+            self.check_09_op.get(),
+            self.check_aw_op.get(),
+            self.check_AW_op.get(),
+            self.check_symbol_op.get()
+        )
         pas.createPass()
         self.lb_pass_op['text'] = pas.passwords[0]
 
@@ -401,7 +470,7 @@ class VizualPas():
     # функция вывода нового пароля вида лицензии
     def fun_lic_pass(self):
         # Формирования с паролем
-        pas = generPas(1,
+        pas = GenerPas(1,
                        self.combobox_separating_symbol_pv.get(),
                        int(self.combobox_number_of_sections_pv.get()),
                        int(self.combobox_size_of_sections_pv.get())
@@ -414,14 +483,32 @@ class VizualPas():
         pyperclip.copy(self.lb_pass_pv['text'])
 
     # функция сохранения пароли в ваил
-    def fun_file_pass(self) -> None:
-        # Формирования с паролем
-        pas = generPas(
+    def fun_file_pass_op(self) -> None:
+        pas = GenerPas(
             int(self.combobox_len_pass_op_v_pf.get()),
             '-',
             1,
             int(self.combobox_len_symbol_op_v_pf.get())
         )
+        pas = self.formation_ofa_symbolic_list(
+            pas,
+            self.check_09_op_v_pf.get(),
+            self.check_aw_op_v_pf.get(),
+            self.check_AW_op_v_pf.get(),
+            self.check_symbol_op_v_pf.get()
+        )
         pas.createPass()
         pas.SaveToFile()
         self.lb_pass_op_pf['text'] = pas.last_file_name
+
+
+    # функция сохранения пароли в ваил
+    def fun_file_pass_pv_v_file(self) -> None:
+        pas = GenerPas(int(self.combobox_len_pass_pv_v_pf.get()),
+            self.combobox_separating_symbol_pv_v_file.get(),
+            int(self.combobox_number_of_sections_pv_v_file.get()),
+            int(self.combobox_size_of_sections_pv_v_file.get())
+        )
+        pas.createPass()
+        pas.SaveToFile()
+        self.lb_pass_pv_pf['text'] = pas.last_file_name
