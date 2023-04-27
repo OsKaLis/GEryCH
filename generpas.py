@@ -17,6 +17,7 @@ class generPas():
                            'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F',
                            'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B',
                            'N', 'M']
+        self.last_file_name = 'default_name_file'
 
     # Создаю заданое количество паролей
     def createPass(self):
@@ -47,7 +48,8 @@ class generPas():
     # Сохранить в фаил созданые пароли (*.txt)
     def SaveToFile(self):
         Namefile = time.strftime("%Y_%m_%d_%H.%M.%S", time.localtime())
-        PTF = open(Namefile + "_pass.txt", "w")
+        self.last_file_name = Namefile + "_pass.txt"
+        PTF = open(self.last_file_name, "w")
         for i in range(0, self.kolPass):
             PTF.write("Pass №" + str(i+1) + " : " + self.passwords[i] + '\n')
         PTF.close()
