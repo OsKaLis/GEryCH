@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter.ttk import Combobox, Notebook, Checkbutton, Style
+from tkinter.messagebox import showwarning
+import pyperclip
 
 from generpas import GenerPas
-
-import pyperclip
 
 
 class VizualPas():
@@ -21,8 +21,7 @@ class VizualPas():
             font='Calibri 20'
             )
 
-        for c in range(3): lb_frame_op.columnconfigure(index=c, weight=1)
-        for r in range(3): lb_frame_op.rowconfigure(index=r, weight=1)
+        self.create_cell(lb_frame_op)
 
         self.lb_pass_op = lb_pass_op = tk.Label(
             lb_frame_op,
@@ -116,8 +115,7 @@ class VizualPas():
             font='Calibri 20'
             )
 
-        for c in range(3): lb_frame_pv.columnconfigure(index=c, weight=1)
-        for r in range(3): lb_frame_pv.rowconfigure(index=r, weight=1)
+        self.create_cell(lb_frame_pv)
 
         self.lb_pass_pv = lb_pass_pv = tk.Label(
             lb_frame_pv,
@@ -184,7 +182,8 @@ class VizualPas():
         lb_separating_symbol_pv.grid(row=1, column=0, columnspan=2, sticky='w')
         combobox_separating_symbol_pv.grid(row=1, column=2, sticky='e')
 
-        lb_number_of_sections_pv.grid(row=2, column=0, columnspan=2, sticky='w')
+        lb_number_of_sections_pv.grid(row=2, column=0, columnspan=2,
+                                      sticky='w')
         combobox_number_of_sections_pv.grid(row=2, column=2, sticky='e')
 
         lb_size_of_sections_pv.grid(row=3, column=0, columnspan=2, sticky='w')
@@ -212,8 +211,7 @@ class VizualPas():
         tab_v_file.add(frame_pv_v_file, text="Пароли ввиде лицензии")
 
         # Создание списка файлов в виде простых паролей
-        for c in range(3): frame_op_v_file.columnconfigure(index=c, weight=1)
-        for r in range(3): frame_op_v_file.rowconfigure(index=r, weight=1)
+        self.create_cell(frame_op_v_file)
 
         # Имя файла куда сохранилась
         self.lb_pass_op_pf = lb_pass_op_pf = tk.Label(
@@ -268,7 +266,6 @@ class VizualPas():
         check_09_op_v_pf.set(True)
         self.check_09_op_v_pf = check_09_op_v_pf
 
-
         check_aw_op_v_pf = tk.BooleanVar()
         checkbutton_aw_op_v_pf = Checkbutton(
             frame_op_v_file,
@@ -308,10 +305,8 @@ class VizualPas():
             command=self.fun_file_pass_op
         )
 
-
         # Создание списка файлов в виде лицензии
-        for c in range(4): frame_pv_v_file.columnconfigure(index=c, weight=1)
-        for r in range(4): frame_pv_v_file.rowconfigure(index=r, weight=1)
+        self.create_cell(frame_pv_v_file, 4)
 
         self.lb_pass_pv_pf = lb_pass_pv_pf = tk.Label(
             frame_pv_v_file,
@@ -383,7 +378,7 @@ class VizualPas():
             fg='#000000',
             text='Сохранить в фаил',
             font='Calibri 15',
-            command = self.fun_file_pass_pv_v_file
+            command=self.fun_file_pass_pv_v_file
             )
         self.generate_file_pass_pv_pf = generate_file_pass_pv_pf
 
@@ -406,17 +401,40 @@ class VizualPas():
         lb_pass_pv_pf.grid(row=0, column=0, columnspan=4)
         lb_len_pass_pv_v_pf.grid(row=1, column=0, sticky='w', columnspan=2)
         combobox_len_pass_pv_v_pf.grid(row=1, column=2, sticky='e')
-        lb_separating_symbol_pv_v_file.grid(row=2, column=0, columnspan=2, sticky='w')
+        lb_separating_symbol_pv_v_file.grid(row=2, column=0, columnspan=2,
+                                            sticky='w')
         combobox_separating_symbol_pv_v_file.grid(row=2, column=2, sticky='e')
-        lb_number_of_sections_pv_v_file.grid(row=3, column=0, columnspan=2, sticky='w')
+        lb_number_of_sections_pv_v_file.grid(row=3, column=0, columnspan=2,
+                                             sticky='w')
         combobox_number_of_sections_pv_v_file.grid(row=3, column=2, sticky='e')
-        lb_size_of_sections_pv_v_file.grid(row=4, column=0, columnspan=2, sticky='w')
+        lb_size_of_sections_pv_v_file.grid(row=4, column=0, columnspan=2,
+                                           sticky='w')
         combobox_size_of_sections_pv_v_file.grid(row=4, column=2, sticky='e')
         generate_file_pass_pv_pf.grid(row=1, column=3, rowspan=4)
 
-
         # Запуск окна
         window.mainloop()
+
+    def create_cell(self, obj: object, area_size=3):
+        """
+        Создаю ячейки для рисования потом наних обектов.
+        """
+        for column in range(area_size):
+            obj.columnconfigure(index=column, weight=1)
+        for row in range(area_size):
+            obj.rowconfigure(index=row, weight=1)
+
+    def checking_generator_library(self, obj: object):
+        """
+        Проверяет полнаты библиотеки для
+        Формирования пароля.
+        """
+        if obj is None:
+            text = "Нужно выделить хотябы один чекбокс !"
+            showwarning(title="Предупреждение", message=text)
+            return False
+        else:
+            return True
 
     # Формирую символь для генерации
     def formation_ofa_symbolic_list(
@@ -427,27 +445,35 @@ class VizualPas():
             uppercase_letters=True,
             symbols=False
     ):
-        if number_symbols == True:
+        number_checkboxes: int = 0
+        if number_symbols:
             password_object.list_of_character_types['number_symbols'][0] = True
+            number_checkboxes += 1
         else:
             password_object.list_of_character_types['number_symbols'][0] = False
 
-        if lowercase_letters == True:
+        if lowercase_letters:
             password_object.list_of_character_types['lowercase_letters'][0] = True
+            number_checkboxes += 1
         else:
             password_object.list_of_character_types['lowercase_letters'][0] = False
 
-        if uppercase_letters == True:
+        if uppercase_letters:
             password_object.list_of_character_types['uppercase_letters'][0] = True
+            number_checkboxes += 1
         else:
             password_object.list_of_character_types['uppercase_letters'][0] = False
 
-        if symbols == True:
+        if symbols:
             password_object.list_of_character_types['symbols'][0] = True
+            number_checkboxes += 1
         else:
             password_object.list_of_character_types['symbols'][0] = False
 
-        return password_object
+        if number_checkboxes > 0:
+            return password_object
+        else:
+            return None
 
     # функция вывода нового простого пароля
     def fun_one_pass(self):
@@ -460,8 +486,9 @@ class VizualPas():
             self.check_AW_op.get(),
             self.check_symbol_op.get()
         )
-        pas.createPass()
-        self.lb_pass_op['text'] = pas.passwords[0]
+        if self.checking_generator_library(pas):
+            pas.createPass()
+            self.lb_pass_op['text'] = pas.passwords[0]
 
     # Копирует пароль в буфер обмен
     def copy_password_clipboard(self, event):
@@ -482,7 +509,7 @@ class VizualPas():
     def copy_password_lic_clipboard(self, event):
         pyperclip.copy(self.lb_pass_pv['text'])
 
-    # функция сохранения пароли в ваил
+    # функция сохранения пароли в фаил
     def fun_file_pass_op(self) -> None:
         pas = GenerPas(
             int(self.combobox_len_pass_op_v_pf.get()),
@@ -497,18 +524,17 @@ class VizualPas():
             self.check_AW_op_v_pf.get(),
             self.check_symbol_op_v_pf.get()
         )
-        pas.createPass()
-        pas.SaveToFile()
-        self.lb_pass_op_pf['text'] = pas.last_file_name
+        if self.checking_generator_library(pas):
+            pas.createPass()
+            pas.SaveToFile()
+            self.lb_pass_op_pf['text'] = pas.last_file_name
 
-
-    # функция сохранения пароли в ваил
+    # функция сохранения пароли в фаил
     def fun_file_pass_pv_v_file(self) -> None:
         pas = GenerPas(int(self.combobox_len_pass_pv_v_pf.get()),
-            self.combobox_separating_symbol_pv_v_file.get(),
-            int(self.combobox_number_of_sections_pv_v_file.get()),
-            int(self.combobox_size_of_sections_pv_v_file.get())
-        )
+                       self.combobox_separating_symbol_pv_v_file.get(),
+                       int(self.combobox_number_of_sections_pv_v_file.get()),
+                       int(self.combobox_size_of_sections_pv_v_file.get()))
         pas.createPass()
         pas.SaveToFile()
         self.lb_pass_pv_pf['text'] = pas.last_file_name
