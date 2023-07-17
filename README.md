@@ -15,4 +15,4 @@
 3 ] Может сгененрировать множство паролей в фаил согласно настройкам 
 
 ```
-[Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/main/GEryCH.png?raw=true)
+[Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/c1195d15589fe798fe03c970315248d74a9a97ab/images/GEryCH.png)
