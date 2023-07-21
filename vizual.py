@@ -424,18 +424,6 @@ class VizualPas():
         for row in range(area_size):
             obj.rowconfigure(index=row, weight=1)
 
-    def checking_generator_library(self, obj: object):
-        """
-        Проверяет полнаты библиотеки для
-        Формирования пароля.
-        """
-        if obj is None:
-            text = "Нужно выделить хотябы один чекбокс !"
-            showwarning(title="Предупреждение", message=text)
-            return False
-        else:
-            return True
-
     # Формирую символь для генерации
     def formation_ofa_symbolic_list(
             self,
@@ -475,28 +463,93 @@ class VizualPas():
         else:
             return None
 
-    # функция вывода нового простого пароля
-    def fun_one_pass(self):
-        # Формирования с паролем
-        pas = GenerPas(1, '-', 1, int(self.combobox_op.get()))
-        pas = self.formation_ofa_symbolic_list(
-            pas,
-            self.check_09_op.get(),
-            self.check_aw_op.get(),
-            self.check_AW_op.get(),
-            self.check_symbol_op.get()
-        )
-        if self.checking_generator_library(pas):
-            pas.createPass()
-            self.lb_pass_op['text'] = pas.passwords[0]
+    def create_simple_password(self, size_password, number_passwords=1):
+        """
+        Создание пороля вида [########],
+        Можно создавать как один так и несколько.
+        """
+        def type_check(parameters, text):
+            try:
+                parameters = int(parameters)
+            except ValueError:
+                showwarning(title="Предупреждение", message=text)
+                return False
+            else:
+                return True
 
-    # Копирует пароль в буфер обмен
+        def checkin_gnegativity(parameters, text):
+            try:
+                if parameters < 1:
+                    raise ValueError(text)
+            except Exception as error:
+                showwarning(title="Предупреждение", message=error)
+                return False
+            else:
+                return True
+
+        def checkin_none(parameters):
+            text = 'Не выбраны не одной чек бокс ?'
+            try:
+                if parameters is None:
+                    raise ValueError(text)
+            except Exception as error:
+                showwarning(title="Предупреждение", message=error)
+                return False
+            else:
+                return True
+
+        text = 'Не коректно введено количество символов в пароле?'
+        if type_check(size_password, text):
+            if type_check(number_passwords, text):
+                text = 'Отрицательное число в размерности рароля ?'
+                size_password = int(size_password)
+                number_passwords = int(number_passwords)
+                if checkin_gnegativity(size_password, text):
+                    if checkin_gnegativity(number_passwords, text):
+                        pas = GenerPas(
+                            number_passwords,
+                            '-',
+                            1,
+                            size_password
+                        )
+                        if number_passwords > 1:
+                            pas = self.formation_ofa_symbolic_list(
+                                pas,
+                                self.check_09_op_v_pf.get(),
+                                self.check_aw_op_v_pf.get(),
+                                self.check_AW_op_v_pf.get(),
+                                self.check_symbol_op_v_pf.get()
+                            )
+                        else:
+                            pas = self.formation_ofa_symbolic_list(
+                                pas,
+                                self.check_09_op.get(),
+                                self.check_aw_op.get(),
+                                self.check_AW_op.get(),
+                                self.check_symbol_op.get()
+                            )
+                        if checkin_none(pas):
+                            pas.createPass()
+                            if number_passwords > 1:
+                                pas.SaveToFile()
+                                self.lb_pass_op_pf['text'] = pas.last_file_name
+                            else:
+                                self.lb_pass_op['text'] = pas.passwords[0]
+
+    def fun_one_pass(self) -> None:
+        """
+        функция создаёт один простой парол.
+        """
+        self.create_simple_password(self.combobox_op.get())
+
     def copy_password_clipboard(self, event):
+        """
+        Копирует простой пароль в буфер обмен.
+        """
         pyperclip.copy(self.lb_pass_op['text'])
 
     # функция вывода нового пароля вида лицензии
     def fun_lic_pass(self):
-        # Формирования с паролем
         pas = GenerPas(1,
                        self.combobox_separating_symbol_pv.get(),
                        int(self.combobox_number_of_sections_pv.get()),
@@ -509,25 +562,14 @@ class VizualPas():
     def copy_password_lic_clipboard(self, event):
         pyperclip.copy(self.lb_pass_pv['text'])
 
-    # функция сохранения пароли в фаил
     def fun_file_pass_op(self) -> None:
-        pas = GenerPas(
-            int(self.combobox_len_pass_op_v_pf.get()),
-            '-',
-            1,
-            int(self.combobox_len_symbol_op_v_pf.get())
+        """
+        функция сохранения количество паролий в фаил.
+        """
+        self.create_simple_password(
+            self.combobox_len_symbol_op_v_pf.get(),
+            self.combobox_len_pass_op_v_pf.get()
         )
-        pas = self.formation_ofa_symbolic_list(
-            pas,
-            self.check_09_op_v_pf.get(),
-            self.check_aw_op_v_pf.get(),
-            self.check_AW_op_v_pf.get(),
-            self.check_symbol_op_v_pf.get()
-        )
-        if self.checking_generator_library(pas):
-            pas.createPass()
-            pas.SaveToFile()
-            self.lb_pass_op_pf['text'] = pas.last_file_name
 
     # функция сохранения пароли в фаил
     def fun_file_pass_pv_v_file(self) -> None:
