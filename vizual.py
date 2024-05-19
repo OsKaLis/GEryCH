@@ -107,7 +107,6 @@ class VizualPas():
         checkbutton_AW_op.grid(row=2, column=2)
         checkbutton_symbol_op.grid(row=2, column=3)
 
-
         # Генерация пароля вида (####-####-####)
         lb_frame_pv = tk.LabelFrame(
             window,
