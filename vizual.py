@@ -13,16 +13,13 @@ class VizualPas():
         window.title('GEryCH')
         window.geometry('610x580')
         window.iconbitmap('images/1682135435611.ico')
-
         # Генерация простого пароля (######## ->)
         lb_frame_op = tk.LabelFrame(
             window,
             text='Генерация простого пароля',
             font='Calibri 20'
             )
-
         self.create_cell(lb_frame_op)
-
         self.lb_pass_op = lb_pass_op = tk.Label(
             lb_frame_op,
             text='########',
@@ -30,7 +27,6 @@ class VizualPas():
             fg='#1E90FF'
             )
         lb_pass_op.bind("<Button-1>", self.copy_password_clipboard)
-
         lb_len_symbol_op = tk.Label(
             lb_frame_op,
             text='Количество синволов в пароле:',
@@ -44,7 +40,6 @@ class VizualPas():
             )
         combobox_op.set(8)
         self.combobox_op = combobox_op
-
         # чекбоксы выбора из чего генерации
         style = Style()
         style.configure('TCheckbutton', font='Calibri 15')
@@ -536,15 +531,11 @@ class VizualPas():
                                 self.lb_pass_op['text'] = pas.passwords[0]
 
     def fun_one_pass(self) -> None:
-        """
-        функция создаёт один простой парол.
-        """
+        """функция создаёт один простой парол."""
         self.create_simple_password(self.combobox_op.get())
 
     def copy_password_clipboard(self, event):
-        """
-        Копирует простой пароль в буфер обмен.
-        """
+        """Копирует простой пароль в буфер обмен."""
         pyperclip.copy(self.lb_pass_op['text'])
 
     # функция вывода нового пароля вида лицензии
@@ -562,9 +553,7 @@ class VizualPas():
         pyperclip.copy(self.lb_pass_pv['text'])
 
     def fun_file_pass_op(self) -> None:
-        """
-        функция сохранения количество паролий в фаил.
-        """
+        """функция сохранения количество паролий в фаил."""
         self.create_simple_password(
             self.combobox_len_symbol_op_v_pf.get(),
             self.combobox_len_pass_op_v_pf.get()

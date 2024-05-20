@@ -1,6 +1,4 @@
 from vizual import VizualPas
 
-"""
-Запускаю GERYCH
-"""
+"""Запускаю GERYCH."""
 vp = VizualPas()

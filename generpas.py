@@ -2,8 +2,9 @@ from random import choice
 import time
 
 
-# Клас генерации
 class GenerPas():
+    """# Клас генерации."""
+
     def __init__(self, kolPass: int, razSinvol, kolSekciy, dlinaSekcii):
         self.kolPass: int = kolPass
         self.razSinvol = razSinvol
@@ -11,7 +12,6 @@ class GenerPas():
         self.dlinaSekcii = dlinaSekcii
         self.passwords = []
         self.last_file_name = 'default_name_file'
-
         # Символи для генерации
         self.number_symbols = [
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
@@ -29,7 +29,6 @@ class GenerPas():
             '+', '[', ']', '{', '}', ':', ';', '|', '<', '>', '?', '/', '.',
             ',', '`'
         ]
-
         self.list_of_character_types = {
             'number_symbols': [True, self.number_symbols],
             'lowercase_letters': [True, self.lowercase_letters],
@@ -37,16 +36,16 @@ class GenerPas():
             'symbols': [False, self.symbols]
         }
 
-    # Создаю масим символов для генерации
     def CreatebBaseSymbols(self):
+        """Создаю масим символов для генерации."""
         rez = []
         for name in self.list_of_character_types:
             if self.list_of_character_types[name][0]:
                 rez += self.list_of_character_types[name][1]
         return rez
 
-    # Создание заданое количество паролей
     def createPass(self):
+        """Создание заданое количество паролей."""
         skleu = ""
         genPass = ""
         for i in range(0, self.kolPass):
@@ -62,17 +61,17 @@ class GenerPas():
             self.passwords.insert(i, skleu)
             skleu = ""
 
-    # Показ пароля из созданых
     def ridPass(self, nom):
+        """Показ пароля из созданых."""
         return self.passwords[nom]
 
-    # вывести все созданые пароли
     def FulCreatePass(self):
+        """Вывести все созданые пароли."""
         for i in range(0, self.kolPass):
             print(f'Pass № {i+1} : {self.passwords[i]}')
 
-    # Сохранить в фаил созданые пароли (*.txt)
     def SaveToFile(self):
+        """Сохранить в фаил созданые пароли (*.txt)."""
         Namefile = time.strftime("%Y_%m_%d_%H.%M.%S", time.localtime())
         self.last_file_name = Namefile + "_pass.txt"
         PTF = open(self.last_file_name, "w")
