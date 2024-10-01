@@ -18,12 +18,13 @@
 > * 8 (Запускаем) :python gerych.py
 
 ## Cтек технологий:
-<img src="https://img.shields.io/badge/Python_-3.9.10-Green"> <img src="https://img.shields.io/badge/Tkinter_-8.6-blue"> <img src="https://img.shields.io/badge/Pyperclip_-1.8.2-red">
+<img src="https://img.shields.io/badge/Python_-3.12-Green"> <img src="https://img.shields.io/badge/Tkinter_-8.6-blue"> <img src="https://img.shields.io/badge/Pyperclip_-1.8.2-red">
 
 ## Планы по доработке:
 * [1] - Визуал сделать спомощью (PyQT) 
 * [2] - Собрать 2 версии одну для Linux вторую Wimdows исполняемые файлы
 
+## Скриншот приложения:
 ![Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/c1195d15589fe798fe03c970315248d74a9a97ab/images/GEryCH.png)
 
 ## Автор: Юшко Ю.Ю.

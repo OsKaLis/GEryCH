@@ -12,7 +12,7 @@ class VizualPas():
         window = tk.Tk()
         window.title('GEryCH')
         window.geometry('610x580')
-        window.iconbitmap('images/1682135435611.ico')
+        # window.iconbitmap('images/1682135435611.ico')
         # Генерация простого пароля (######## ->)
         lb_frame_op = tk.LabelFrame(
             window,
