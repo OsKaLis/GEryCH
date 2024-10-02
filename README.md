@@ -2,29 +2,65 @@
   <h1>Проект GEryCH</h1>
 </div>
 
-## Для чего утилитка:
-> [!NOTE]
-> Сгенерировать пароль согласно настройкам
-> Сгененировать пароль вида  ####-####-#### или согласно настройкам
-> Может сгененрировать множство паролей в фаил согласно настройкам 
+## Используемые технологии:
+![Python 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg?style=flat&logo=python&logoColor=white)
+<img src="https://img.shields.io/badge/Pyperclip_-1.8.2-red">
+![Python 3.12](https://img.shields.io/badge/QT-6.7.1-brightgreen.svg?style=flat&logo=qt&logoColor=white)
+
+## Функционал генератора:
++ Сгенерировать пароль согласно настройкам
++ Сгененировать пароль вида  ####-####-#### или согласно настройкам
++ Может сгененрировать множство простых паролей в фаил согласно настройкам 
++ Может сгененрировать множство паролей вида key в фаил согласно настройкам 
 
 ## Как развернуть проект на локальной машине:
-> [!IMPORTANT]
-> * 1 (Клонируем проект) : [ git@github.com:OsKaLis/GEryCH.git ]
-> * 2 (Переходим в директорию проекта) :cd GEryCH/
-> * 3 (Устанавливаем виртуальное окружение) :python -m venv venv
-> * 4 (Запускаем виртуальное окружение из папки "GEryCH") :source venv/Scripts/activate
-> * 5 (Установка всех нужных библиотек) :pip install -r requirements.txt
-> * 8 (Запускаем) :python gerych.py
 
-## Cтек технологий:
-<img src="https://img.shields.io/badge/Python_-3.12-Green"> <img src="https://img.shields.io/badge/Tkinter_-8.6-blue"> <img src="https://img.shields.io/badge/Pyperclip_-1.8.2-red">
+### 1. Клонируем проект:
+```
+git clone git@github.com:OsKaLis/GEryCH.git
+```
 
-## Планы по доработке:
-* [1] - Визуал сделать спомощью (PyQT) 
-* [2] - Собрать 2 версии одну для Linux вторую Wimdows исполняемые файлы
+### 2. Переходим в директорию проекта:
+```
+cd GEryCH/
+```
+
+### 3. Необходимо проверить установленную версию Python:
+```
+python3 -V
+```
+- Если у вас версия 3.12.*, то можно переходить к шагу 4.
+- Если версия не 3.12.*, то необходимо её установить.
+
+### 4. Устанвка `poetry`:
+```
+pip install poetry
+```
+- Версия `Poetry 1.8.3`
+- [Не большое руководство по `poetry`](https://habr.com/ru/articles/740376/)
+
+### 5. Проверка что `poetry` установлен:
+```
+poetry -V
+```
+
+### 6. Устанавливаем установка зависимости для окружения:
+```
+poetry install
+```
+
+### 7. Запуск приложение:
+```
+python gerych.py
+```
+
 
 ## Скриншот приложения:
 ![Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/c1195d15589fe798fe03c970315248d74a9a97ab/images/GEryCH.png)
+
+
+## Планы по доработке:
++ Собрать 2 версии одну для Linux вторую Wimdows исполняемые файлы
+
 
 ## Автор: Юшко Ю.Ю.
