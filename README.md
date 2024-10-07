@@ -4,7 +4,6 @@
 
 ## Используемые технологии:
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg?style=flat&logo=python&logoColor=white)
-<img src="https://img.shields.io/badge/Pyperclip_-1.8.2-red">
 ![Python 3.12](https://img.shields.io/badge/QT-6.7.1-brightgreen.svg?style=flat&logo=qt&logoColor=white)
 
 ## Функционал генератора:
