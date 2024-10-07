@@ -1,7 +1,8 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QMainWindow, QVBoxLayout, QWidget, QLabel,
-    QCheckBox, QPushButton, QComboBox,
+    QCheckBox, QPushButton, QComboBox, QHBoxLayout,
+    QGroupBox, QLineEdit,
 )
 
 from generpas import GenerPas
@@ -17,39 +18,53 @@ class SimplePassword(QMainWindow):
         super(SimplePassword, self).__init__()
         tp = QVBoxLayout()
 
-        self.label_pass = QLabel('PASS')
+        self.edit_line_pass = QLineEdit('GENERATE_PASS')
+        font = self.edit_line_pass.font()
+        font.setPointSize(22)
+        self.edit_line_pass.setFont(font)
+        self.edit_line_pass.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
-        self.numbers = QCheckBox('Цыфры')
-        self.numbers.setChecked(True)
+        # font - общий
+        font_all = font
+        font_all.setPointSize(15)
+        self.setFont(font_all)
 
-        self.number_characters = QLabel('Длина будующего пароля')
-
+        # Отвечает за интерфейс Учёта размера пароля
+        choice_size_pass = QHBoxLayout()
+        self.number_characters = QLabel('Длина будующего пароля:')
         self.choosing_password_length = QComboBox()
         self.choosing_password_length.addItems(
             [str(x) for x in range(MIN_PASS, MAX_PASS)]
         )
+        choice_size_pass.addWidget(self.number_characters)
+        choice_size_pass.addWidget(self.choosing_password_length)
 
-        self.lowercase_letters = QCheckBox('Буквы англ в нижнем регистре')
-        self.lowercase_letters.setChecked(True)
-
+        # Панель из чего генерить пароль
+        generation_range_1 = QHBoxLayout()
         self.uppercase_letters = QCheckBox('Буквы англ в верхнем регистре')
         self.uppercase_letters.setChecked(True)
+        self.numbers = QCheckBox('Цыфры')
+        self.numbers.setChecked(True)
+        generation_range_1.addWidget(self.uppercase_letters)
+        generation_range_1.addWidget(self.numbers)
 
+        generation_range_2 = QHBoxLayout()
+        self.lowercase_letters = QCheckBox('Буквы англ в нижнем регистре')
+        self.lowercase_letters.setChecked(True)
         self.symbols = QCheckBox('Символы')
         self.symbols.setChecked(False)
+        generation_range_2.addWidget(self.lowercase_letters)
+        generation_range_2.addWidget(self.symbols)
 
         self.get_pass = QPushButton('Получить')
         self.get_pass.pressed.connect(self.clik_get_pass)
 
-        tp.addWidget(self.label_pass)
-        tp.addWidget(self.number_characters)
-        tp.addWidget(self.choosing_password_length)
-        tp.addWidget(self.numbers)
-        tp.addWidget(self.lowercase_letters)
-        tp.addWidget(self.uppercase_letters)
-        tp.addWidget(self.symbols)
+        # Распределяем элементы по секциям
+        tp.addWidget(self.edit_line_pass)
+        tp.addLayout(choice_size_pass)
+        tp.addLayout(generation_range_1)
+        tp.addLayout(generation_range_2)
         tp.addWidget(self.get_pass)
-
         widget = QWidget()
         widget.setLayout(tp)
         self.setCentralWidget(widget)
@@ -68,4 +83,4 @@ class SimplePassword(QMainWindow):
         sp.list_of_character_types['uppercase_letters'][0] = uppercase_letters
         sp.list_of_character_types['symbols'][0] = symbols
         sp.createPass()
-        self.label_pass.setText(sp.passwords[0])
+        self.edit_line_pass.setText(sp.passwords[0])

@@ -1,6 +1,7 @@
 import sys
 
 from PyQt6.QtCore import QSize
+from PyQt6 import QtGui
 from PyQt6.QtWidgets import (
     QApplication, QHBoxLayout,
     QMainWindow, QPushButton, QStackedLayout,
@@ -17,6 +18,7 @@ class MainGeryCH(QMainWindow):
         super(MainGeryCH, self).__init__()
 
         self.setWindowTitle('GEryCh')
+        self.setWindowIcon(QtGui.QIcon('images/1682135435611.ico'))
         self.setFixedSize(QSize(600, 400))
 
         tab_panel = QVBoxLayout()
