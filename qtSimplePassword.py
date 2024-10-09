@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QMainWindow, QVBoxLayout, QWidget, QLabel,
     QCheckBox, QPushButton, QComboBox, QHBoxLayout,
-    QGroupBox, QLineEdit,
+    QLineEdit, QMessageBox,
 )
 
 from generpas import GenerPas
@@ -72,15 +72,28 @@ class SimplePassword(QMainWindow):
     def clik_get_pass(self):
         """Клик кнопки [get_pass] для генерации простого пароля."""
 
-        numbers = self.numbers.isChecked()
+        number = self.numbers.isChecked()
         lowercase_letters = self.lowercase_letters.isChecked()
         uppercase_letters = self.uppercase_letters.isChecked()
         symbols = self.symbols.isChecked()
-        length_pass = MIN_PASS + self.choosing_password_length.currentIndex()
-        sp = GenerPas(1, '', 1, length_pass)
-        sp.list_of_character_types['number_symbols'][0] = numbers
-        sp.list_of_character_types['lowercase_letters'][0] = lowercase_letters
-        sp.list_of_character_types['uppercase_letters'][0] = uppercase_letters
-        sp.list_of_character_types['symbols'][0] = symbols
-        sp.createPass()
-        self.edit_line_pass.setText(sp.passwords[0])
+        if (
+            not number
+            and not lowercase_letters
+            and not uppercase_letters
+            and not symbols
+        ):
+            error = QMessageBox(self)
+            error.setWindowTitle('Ошибка:')
+            error.setText('Нужно выбрато хотябы один из чекбоксов!!!')
+            button_error = error.exec()
+            if button_error == QMessageBox.StandardButton.Ok:
+                pass
+        else:
+            length_pass = MIN_PASS + self.choosing_password_length.currentIndex()
+            sp = GenerPas(1, '', 1, length_pass)
+            sp.list_of_character_types['number_symbols'][0] = number
+            sp.list_of_character_types['lowercase_letters'][0] = lowercase_letters
+            sp.list_of_character_types['uppercase_letters'][0] = uppercase_letters
+            sp.list_of_character_types['symbols'][0] = symbols
+            sp.createPass()
+            self.edit_line_pass.setText(sp.passwords[0])

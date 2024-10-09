@@ -9,6 +9,7 @@ from PyQt6.QtWidgets import (
 )
 
 from qtSimplePassword import SimplePassword
+from qtKeyPassword import KeyPassword
 
 
 class MainGeryCH(QMainWindow):
@@ -30,17 +31,21 @@ class MainGeryCH(QMainWindow):
 
         # Кнопка генерации простого пароля
         button_pass = QPushButton('Простой пароль')
+        button_pass.setIconSize(QSize(32, 32))
+        button_pass.setIcon(QtGui.QIcon('images/5582931.png'))
         button_pass.pressed.connect(self.activate_pass)
         button_panel.addWidget(button_pass)
-        self.SimplePassword = SimplePassword()
-        self.distribution.addWidget(self.SimplePassword)
+        self.simple_password = SimplePassword()
+        self.distribution.addWidget(self.simple_password)
 
         # Кнопка генерации пароля вида KEY
         button_key = QPushButton('Пароль вида лицензии')
+        button_key.setIconSize(QSize(32, 32))
+        button_key.setIcon(QtGui.QIcon('images/5395518.png'))
         button_key.pressed.connect(self.activate_key)
-        self.label_key = QLabel('KEY')
         button_panel.addWidget(button_key)
-        self.distribution.addWidget(self.label_key)
+        self.key_password = KeyPassword()
+        self.distribution.addWidget(self.key_password)
 
         # Собираем
         widget = QWidget()
