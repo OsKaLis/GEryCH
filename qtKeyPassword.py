@@ -15,7 +15,7 @@ SEPARATING_SIMPLE = [
 
 
 class KeyPassword(QMainWindow):
-    """."""
+    """Клас для создание интерфейса создания пароля типа Key."""
     def __init__(self):
         super(KeyPassword, self).__init__()
         os_panely = QVBoxLayout()
@@ -96,7 +96,7 @@ class KeyPassword(QMainWindow):
         widget.setLayout(os_panely)
         self.setCentralWidget(widget)
 
-    def clik_receive_pass(self):
+    def clik_receive_pass(self, kol_pass: int = 1, file: bool = False):
         """Сгенирировать пароль по типу KEY."""
 
         separating_simple = SEPARATING_SIMPLE[
@@ -104,7 +104,7 @@ class KeyPassword(QMainWindow):
         ]
         kolsekciy = MIN_NUMBER + self.cb_number_section.currentIndex()
         dlinasekcii = MIN_NUMBER + self.cb_size_section.currentIndex()
-        gp = GenerPas(1, separating_simple, kolsekciy, dlinasekcii)
+        gp = GenerPas(kol_pass, separating_simple, kolsekciy, dlinasekcii)
         number = self.number.isChecked()
         lowercase_letters = self.lowercase_letters.isChecked()
         uppercase_letters = self.uppercase_letters.isChecked()
@@ -127,4 +127,6 @@ class KeyPassword(QMainWindow):
             gp.list_of_character_types['uppercase_letters'][0] = uppercase_letters
             gp.list_of_character_types['symbols'][0] = symbols
             gp.createPass()
+            if file:
+                return gp.passwords
             self.edit_line_pass.setText(gp.passwords[0])

@@ -158,7 +158,10 @@ class MainGeryCH(QMainWindow):
 
         qdialog_input = self.create_dialog_input_value('В количество сгенерируемых паролей типа Key:')
         if qdialog_input.exec():
-            print(self.spin_box.value())
+            list_password = self.key_password.clik_receive_pass(
+                self.spin_box.value(), True,
+            )
+            self.save_to_file(list_password)
 
     def action_button_exit(self):
         """Кнопка выхода из програмы."""
