@@ -55,7 +55,7 @@ python qt-gerych.py
 
 
 ## Скриншот приложения:
-![Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/c1195d15589fe798fe03c970315248d74a9a97ab/images/GEryCH.png)
+![Интерфейс программы GEryCH](https://github.com/OsKaLis/GEryCH/blob/8a9c36c2ccee63d744fd8acadb5bfd511656c791/images/GEryCH.png)
 
 
 ## Планы по доработке:
