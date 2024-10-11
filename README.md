@@ -50,7 +50,7 @@ poetry install
 
 ### 7. Запуск приложение:
 ```
-python gerych.py
+python qt-gerych.py
 ```
 
 

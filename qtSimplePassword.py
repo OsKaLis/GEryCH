@@ -57,7 +57,7 @@ class SimplePassword(QMainWindow):
         generation_range_2.addWidget(self.symbols)
 
         self.get_pass = QPushButton('Получить')
-        self.get_pass.pressed.connect(self.clik_get_pass)
+        self.get_pass.pressed.connect(self.get_password)
 
         # Распределяем элементы по секциям
         tp.addWidget(self.edit_line_pass)
@@ -69,7 +69,7 @@ class SimplePassword(QMainWindow):
         widget.setLayout(tp)
         self.setCentralWidget(widget)
 
-    def clik_get_pass(self):
+    def get_password(self, kol_pass: int = 1, file: bool = False):
         """Клик кнопки [get_pass] для генерации простого пароля."""
 
         number = self.numbers.isChecked()
@@ -85,15 +85,15 @@ class SimplePassword(QMainWindow):
             error = QMessageBox(self)
             error.setWindowTitle('Ошибка:')
             error.setText('Нужно выбрато хотябы один из чекбоксов!!!')
-            button_error = error.exec()
-            if button_error == QMessageBox.StandardButton.Ok:
-                pass
+            error.exec()
         else:
             length_pass = MIN_PASS + self.choosing_password_length.currentIndex()
-            sp = GenerPas(1, '', 1, length_pass)
+            sp = GenerPas(kol_pass, '', 1, length_pass)
             sp.list_of_character_types['number_symbols'][0] = number
             sp.list_of_character_types['lowercase_letters'][0] = lowercase_letters
             sp.list_of_character_types['uppercase_letters'][0] = uppercase_letters
             sp.list_of_character_types['symbols'][0] = symbols
             sp.createPass()
+            if file:
+                return sp.passwords
             self.edit_line_pass.setText(sp.passwords[0])
